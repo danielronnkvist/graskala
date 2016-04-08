@@ -7,7 +7,7 @@ export default class Post extends Component {
   render() {
     return (
       <div className="post">
-        <h2>{this.props.post.title}</h2>
+        <h1>{this.props.post.title}</h1>
         <small>{this.props.post.createdAt.toDateString()}</small>
       </div>
     );
