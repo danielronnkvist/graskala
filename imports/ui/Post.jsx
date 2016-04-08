@@ -8,12 +8,14 @@ export default class Post extends Component {
   render() {
     return (
       <div className="post">
-        <h1
-          onClick={ () =>
-            FlowRouter.go('/post/:slug', this.props.post)
-          }>
-          {this.props.post.title}
-        </h1>
+        <div>
+          <h1
+            onClick={ () =>
+              FlowRouter.go('/post/:slug', this.props.post)
+            }>
+            {this.props.post.title}
+          </h1>
+        </div>
         <small>{this.props.post.createdAt.toDateString()}</small>
       </div>
     );
