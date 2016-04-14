@@ -5,6 +5,6 @@ ServiceConfiguration.configurations.remove({
 })
 ServiceConfiguration.configurations.insert({
   service: "google",
-  clientId: Meteor.settings.google.clientId,
-  secret: Meteor.settings.google.secret,
+  clientId: Meteor.settings.google.clientId || process.env.GOOGLE_CLIENT_ID,
+  secret: Meteor.settings.google.secret || process.env.GOOGLE_SECRET,
 });
