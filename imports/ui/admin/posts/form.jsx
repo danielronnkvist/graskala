@@ -8,8 +8,20 @@ export default class PostForm extends Component {
 
   handleSubmit() {
     Posts.update(this.props.post._id, {
-      $set: { title: this.title.lastHtml },
+      $set: {
+        title: this.title.lastHtml ,
+        slug: this.slug.value,
+        createdAt: this.props.post.createdAt || new Date(),
+      },
+    }, {
+      upsert: true,
     })
+  }
+
+  getDateString() {
+    if(this.props.post.createdAt) {
+      return this.props.post.createdAt.toDateString();
+    }
   }
 
   render() {
@@ -25,7 +37,15 @@ export default class PostForm extends Component {
             disabled={false}
           />
         </div>
-        <small>{this.props.post.createdAt.toDateString()}</small>
+        <small>{this.getDateString()}</small>
+        <br/>
+        <input
+          type="text"
+          defaultValue={this.props.post.slug}
+          ref={ node =>
+            this.slug = node
+          }
+        />
         <button
           className="save"
           onClick={this.handleSubmit.bind(this)}
