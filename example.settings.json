@@ -1,6 +1,11 @@
 {
+  "MONGO_URL": "",
   "google": {
     "clientId": "",
     "secret": "",
   },
+  "kadira": {
+    "appId": "",
+    "appSecret": ""
+   }
 }
