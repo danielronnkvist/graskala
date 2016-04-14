@@ -8,7 +8,9 @@ export default class AdminLayout extends Component {
     return (
       <div className="page-content">
         <Header />
-        {this.props.main()}
+        <div className="container">
+          {this.props.main()}
+        </div>
       </div>
     );
   }
