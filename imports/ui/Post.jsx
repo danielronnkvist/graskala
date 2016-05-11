@@ -17,6 +17,7 @@ export default class Post extends Component {
           </h1>
         </div>
         <small>{this.props.post.createdAt.toDateString()}</small>
+        <p>{this.props.post.text}</p>
       </div>
     );
   }

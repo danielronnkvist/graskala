@@ -11,6 +11,7 @@ export default class PostForm extends Component {
       $set: {
         title: this.title.lastHtml ,
         slug: this.slug.value,
+        text: this.text.lastHtml,
         createdAt: this.props.post.createdAt || new Date(),
       },
     }, {
@@ -46,6 +47,13 @@ export default class PostForm extends Component {
             this.slug = node
           }
         />
+        <ContentEditable
+          html={this.props.post.text}
+          tagName="p"
+          ref={ node =>
+            this.text = node
+          }
+          />
         <button
           className="save"
           onClick={this.handleSubmit.bind(this)}

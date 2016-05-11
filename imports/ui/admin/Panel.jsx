@@ -23,6 +23,7 @@ export default class Panel extends Component {
         <ul>
           { this.props.posts.map( post =>
             <li
+              key={post._id}
               onClick={ () =>
                 FlowRouter.go('/admin/posts/edit/'+post.slug, this.props.post)
               }
