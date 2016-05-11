@@ -14,8 +14,15 @@ export default class Menu extends Component {
   render() {
     return (
       <div className={ this.getClassName() }>
-        <span>om</span>
-        <span>kontakt</span>
+        <span
+          onClick={ () =>
+            this.props.onLinkClick('/om')
+          }>
+          om
+        </span>
+        <span>
+          kontakt
+        </span>
       </div>
     );
   }

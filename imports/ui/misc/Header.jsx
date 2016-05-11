@@ -12,21 +12,22 @@ export default class Header extends Component {
     };
   }
 
-  toggleMenu() {
+  toggleMenu(state) {
     this.setState({
-      menu: !this.state.menu
+      menu: state !== undefined ? state : !this.state.menu
     });
+  }
+
+  onLinkClick(slug) {
+    this.toggleMenu(false);
+    FlowRouter.go(slug);
   }
 
   render() {
     return (
       <header>
         <div className="container">
-          <h1
-            onClick={ ()=>
-              FlowRouter.go('/')
-            }
-            >
+          <h1 onClick={ this.onLinkClick.bind(this, '/') }>
             GRÅSKALA
           </h1>
 
@@ -40,7 +41,8 @@ export default class Header extends Component {
           </div>
 
           <Menu
-            menu={this.state.menu}
+            menu={ this.state.menu }
+            onLinkClick={ this.onLinkClick.bind(this) }
           />
         </div>
       </header>
