@@ -3,12 +3,14 @@ import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Posts } from '../../api/posts.js';
+import Login from './Login';
 
 export default class Panel extends Component {
 
   render() {
     return (
       <div>
+        <Login />
         <h3>Admin</h3>
 
         <a
