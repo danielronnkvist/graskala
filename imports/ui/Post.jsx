@@ -8,6 +8,7 @@ export default class Post extends Component {
   render() {
     return (
       <div className="post">
+        <img src={this.props.post.image} />
         <div>
           <h1
             onClick={ () =>
