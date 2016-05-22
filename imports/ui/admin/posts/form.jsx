@@ -7,11 +7,10 @@ import { Posts } from '../../../api/posts.js';
 
 export default class PostForm extends Component {
 
-  handleSubmit() {
-    var { post } = this.props;
+  uploadImage(image, post) {
     var file = {
-      type: this.image.files[0].type,
-      name: this.image.files[0].name,
+      type: image.files[0].type,
+      name: image.files[0].name,
     }
     var reader = new FileReader();
     reader.addEventListener("load", function() {
@@ -26,12 +25,19 @@ export default class PostForm extends Component {
       });
     });
     reader.readAsDataURL(this.image.files[0]);
+  }
+
+  handleSubmit(post) {
+    if(this.image.files[0]) {
+      this.uploadImage(this.image, post)
+    }
+
     Posts.update(post._id, {
       $set: {
         title: this.title.lastHtml ,
         slug: this.slug.value,
         text: this.text.lastHtml,
-        createdAt: post.createdAt || new Date(),
+        createdAt: this.props.post.createdAt || new Date(),
       },
     }, {
       upsert: true,
@@ -45,11 +51,13 @@ export default class PostForm extends Component {
   }
 
   render() {
+    const {post} = this.props;
+
     return (
       <div className="post form">
         <div>
           <ContentEditable
-            html={this.props.post.title}
+            html={post.title}
             ref={ node =>
               this.title = node
             }
@@ -58,22 +66,22 @@ export default class PostForm extends Component {
           />
         </div>
         <small>{this.getDateString()}</small>
+        <img src={post.image} />
         <input
           type="file"
-          id="image"
           ref={ node =>
             this.image = node
           }/>
         <br/>
         <input
           type="text"
-          defaultValue={this.props.post.slug}
+          defaultValue={post.slug}
           ref={ node =>
             this.slug = node
           }
         />
         <ContentEditable
-          html={this.props.post.text}
+          html={post.text}
           tagName="p"
           ref={ node =>
             this.text = node
@@ -81,7 +89,7 @@ export default class PostForm extends Component {
           />
         <button
           className="save"
-          onClick={this.handleSubmit.bind(this)}
+          onClick={this.handleSubmit.bind(this, post)}
         >
           Save!
         </button>
