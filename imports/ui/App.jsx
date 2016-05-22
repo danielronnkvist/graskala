@@ -13,6 +13,7 @@ class App extends Component {
       post = {
         title: post.title,
         createdAt: post.createdAt,
+        image: post.image,
         _id: post._id,
         slug: post.slug,
       };
