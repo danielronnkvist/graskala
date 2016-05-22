@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import React, { Component, PropTypes } from 'react';
 import ContentEditable from 'react-contenteditable';
@@ -7,16 +8,34 @@ import { Posts } from '../../../api/posts.js';
 export default class PostForm extends Component {
 
   handleSubmit() {
-    Posts.update(this.props.post._id, {
+    var { post } = this.props;
+    var file = {
+      type: this.image.files[0].type,
+      name: this.image.files[0].name,
+    }
+    var reader = new FileReader();
+    reader.addEventListener("load", function() {
+      Meteor.call('upload', this.result, file, function(err, data) {
+        Posts.update(post._id, {
+          $set: {
+            image: data.url,
+          }
+        }, {
+          upsert: true,
+        })
+      });
+    });
+    reader.readAsDataURL(this.image.files[0]);
+    Posts.update(post._id, {
       $set: {
         title: this.title.lastHtml ,
         slug: this.slug.value,
         text: this.text.lastHtml,
-        createdAt: this.props.post.createdAt || new Date(),
+        createdAt: post.createdAt || new Date(),
       },
     }, {
       upsert: true,
-    })
+    });
   }
 
   getDateString() {
@@ -39,6 +58,12 @@ export default class PostForm extends Component {
           />
         </div>
         <small>{this.getDateString()}</small>
+        <input
+          type="file"
+          id="image"
+          ref={ node =>
+            this.image = node
+          }/>
         <br/>
         <input
           type="text"
