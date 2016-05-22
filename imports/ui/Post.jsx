@@ -7,18 +7,20 @@ export default class Post extends Component {
 
   render() {
     return (
-      <div className="post">
-        <img src={this.props.post.image} />
-        <div>
-          <h1
-            onClick={ () =>
-              FlowRouter.go('/post/:slug', this.props.post)
-            }>
-            {this.props.post.title}
-          </h1>
+      <div className="container">
+        <div className="post">
+          <div>
+            <h1
+              onClick={ () =>
+                FlowRouter.go('/post/:slug', this.props.post)
+              }>
+              {this.props.post.title}
+            </h1>
+          </div>
+          <small>{this.props.post.createdAt.toDateString()}</small>
+          <img src={this.props.post.image} />
+          <p dangerouslySetInnerHTML={{__html: this.props.post.text}}></p>
         </div>
-        <small>{this.props.post.createdAt.toDateString()}</small>
-        <p>{this.props.post.text}</p>
       </div>
     );
   }
