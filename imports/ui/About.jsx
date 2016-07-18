@@ -26,11 +26,6 @@ class AboutComponent extends Component {
   }
 }
 
-
-AboutComponent.propTypes = {
-  data: PropTypes.object.isRequired,
-};
-
 export default createContainer(() => {
   return {
     data: About.findOne({}, { sort: { createdAt: -1 } }),
