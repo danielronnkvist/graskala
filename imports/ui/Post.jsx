@@ -1,7 +1,7 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import React, { Component, PropTypes } from 'react';
 
-import { Posts } from '../api/posts.js';
+import { Posts } from './../../lib/collections.js';
 
 export default class Post extends Component {
 

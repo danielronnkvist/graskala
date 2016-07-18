@@ -3,7 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import React, { Component, PropTypes } from 'react';
 import ContentEditable from 'react-contenteditable';
 
-import { Posts } from '../../../api/posts.js';
+import { Posts } from './../../../../lib/collections.js';
 
 export default class PostForm extends Component {
 

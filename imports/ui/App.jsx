@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Posts } from '../api/posts.js';
+import { Posts } from './../../lib/collections.js';
 import Post from './Post.jsx';
 
 // App component - represents the whole app
