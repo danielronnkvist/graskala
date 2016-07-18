@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
-import { Posts } from './../lib/collections.js';
+import { Posts, About } from './../lib/collections.js';
 import './../imports/api/upload.js';
 
 Meteor.startup(() => {
