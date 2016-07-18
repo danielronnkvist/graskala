@@ -1,5 +1,6 @@
 header
   width 100%
+  min-height 93px
   text-align center
   position fixed
   background-color white
@@ -12,6 +13,14 @@ header
     margin 0.1em 0
     cursor pointer
     display inline-block
+
+    @media screen and (max-width: tablet)
+      font-size 3em
+      margin-top 10.5px
+
+    @media screen and (max-width: mobile)
+      font-size 2em
+      margin-top 19.5px
 
   .hamburger
     width = 30px
