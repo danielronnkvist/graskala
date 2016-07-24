@@ -19,7 +19,7 @@ class AboutComponent extends Component {
     return (
       <div className="container">
         <div className="text-container">
-          { this.props.data ? getContent(this.props.data) : "" }
+          { this.props.data ? this.getContent(this.props.data) : "" }
         </div>
       </div>
     )
