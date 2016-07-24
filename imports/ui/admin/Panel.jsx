@@ -15,6 +15,14 @@ export default class Panel extends Component {
 
         <a
           onClick={ () =>
+            FlowRouter.go('/admin/about/edit')
+          }
+        >
+          Redigera om-sidan
+        </a>
+
+        <a
+          onClick={ () =>
             FlowRouter.go('/admin/posts/new', this.props.post)
           }
         >

@@ -8,9 +8,12 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
-  getPost: function (slug) {
+  getPost(slug) {
     if (slug) {
       return Posts.findOne({slug});
     }
-  }
+  },
+  getAboutData() {
+    return About.findOne({}, { sort: { createdAt: -1 } });
+  },
 });
