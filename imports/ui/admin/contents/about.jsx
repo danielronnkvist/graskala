@@ -7,7 +7,31 @@ import { About } from './../../../../lib/collections.js';
 
 export default class AboutForm extends Component {
 
+  uploadImage(image, id) {
+    var file = {
+      type: image.files[0].type,
+      name: image.files[0].name,
+    }
+    var reader = new FileReader();
+    reader.addEventListener("load", function() {
+      Meteor.call('upload', this.result, file, function(err, data) {
+        About.update(id, {
+          $set: {
+            image: data.url,
+          }
+        }, {
+          upsert: true,
+        })
+      });
+    });
+    reader.readAsDataURL(this.image.files[0]);
+  }
+
   handleSubmit(data) {
+    if(this.image.files[0]) {
+      this.uploadImage(this.image, data._id)
+    }
+
     About.update(data._id, {
       $set: {
         title: this.title.lastHtml,
@@ -23,29 +47,39 @@ export default class AboutForm extends Component {
 
     return (
       <div className="container">
-        <div className="text-container">
-          <div>
-            <ContentEditable
-              html={data.title}
-              tagName="h3"
+        <div className="about">
+          <div className="profile">
+            <img src={data.image} />
+            <input
+              type="file"
               ref={ node =>
-                this.title = node
-              }
-            />
-            <ContentEditable
-              html={data.text}
-              tagName="p"
-              ref={ node =>
-                this.text = node
-              }
-            />
+                this.image = node
+              }/>
+          </div>
+          <div className="text">
+            <div>
+              <ContentEditable
+                html={data.title}
+                tagName="h3"
+                ref={ node =>
+                  this.title = node
+                }
+              />
+              <ContentEditable
+                html={data.text}
+                tagName="p"
+                ref={ node =>
+                  this.text = node
+                }
+              />
+            </div>
+          </div>
             <button
               className="save"
               onClick={this.handleSubmit.bind(this, data)}
             >
               Save!
             </button>
-          </div>
         </div>
       </div>
     )

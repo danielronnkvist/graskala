@@ -18,8 +18,13 @@ class AboutComponent extends Component {
   render() {
     return (
       <div className="container">
-        <div className="text-container">
-          { this.props.data ? this.getContent(this.props.data) : "" }
+        <div className="about">
+          <div className="profile">
+            <img src={ this.props.data ? this.props.data.image : "" }/>
+          </div>
+          <div className="text">
+            { this.props.data ? this.getContent(this.props.data) : "" }
+          </div>
         </div>
       </div>
     )
