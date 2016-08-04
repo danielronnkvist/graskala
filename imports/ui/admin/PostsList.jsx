@@ -13,11 +13,20 @@ export default class PostsList extends Component {
         </td>
         <td className="table-col">
           <a
-            className="button"
+            className="edit"
             onClick={ () =>
               FlowRouter.go('/admin/posts/edit/'+post.slug)
             }>
             redigera
+          </a>
+        </td>
+        <td className="table-col">
+          <a
+            className="delete"
+            onClick={ () =>
+              FlowRouter.go('/admin/posts/delete/'+post.slug)
+            }>
+            ta bort
           </a>
         </td>
       </tr>
@@ -27,7 +36,9 @@ export default class PostsList extends Component {
   render() {
     return (
       <table className="posts-list">
-        { this.props.posts.map(this.getRow)}
+        <tbody>
+          { this.props.posts.map(this.getRow)}
+        </tbody>
       </table>
     );
   }

@@ -13,6 +13,11 @@ Meteor.methods({
       return Posts.findOne({slug});
     }
   },
+  deletePost(slug) {
+    if (slug) {
+      return Posts.remove({slug});
+    }
+  },
   getAboutData() {
     return About.findOne({}, { sort: { createdAt: -1 } });
   },
