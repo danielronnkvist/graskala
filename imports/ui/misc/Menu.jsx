@@ -1,6 +1,14 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import React, { Component } from 'react';
 
+function isAdmin() {
+  if(Meteor.userId()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export default class Menu extends Component {
 
   componentWillReceiveProps() {
@@ -9,6 +17,19 @@ export default class Menu extends Component {
 
   getClassName({menu}) {
     return "menu " + (menu ? "" : "hidden");
+  }
+
+  getAdminLinks() {
+    if(isAdmin()) {
+      return (
+        <span
+          onClick={ () =>
+            this.props.onLinkClick('/admin')
+          }>
+          admin
+        </span>
+      );
+    }
   }
 
   render() {
@@ -23,6 +44,7 @@ export default class Menu extends Component {
         <span>
           kontakt
         </span>
+        { this.getAdminLinks() }
       </div>
     );
   }
