@@ -14,7 +14,7 @@ export default class Header extends Component {
 
   toggleMenu(state) {
     this.setState({
-      menu: state !== undefined ? state : !this.state.menu
+      menu: typeof state === 'boolean' ? state : !this.state.menu
     });
   }
 

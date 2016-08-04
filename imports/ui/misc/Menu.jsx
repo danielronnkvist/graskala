@@ -7,13 +7,13 @@ export default class Menu extends Component {
     this.forceUpdate()
   }
 
-  getClassName() {
-    return "menu " + (this.props.menu ? "" : "hidden");
+  getClassName({menu}) {
+    return "menu " + (menu ? "" : "hidden");
   }
 
   render() {
     return (
-      <div className={ this.getClassName() }>
+      <div className={ this.getClassName(this.props) }>
         <span
           onClick={ () =>
             this.props.onLinkClick('/om')
