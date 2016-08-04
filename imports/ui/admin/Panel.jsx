@@ -1,59 +1,46 @@
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
-import React, { Component, PropTypes } from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
+import React, { Component } from 'react';
 
 import { Posts } from './../../../lib/collections.js';
 import Login from './Login';
+import PostsList from './PostsList';
 
 export default class Panel extends Component {
 
   render() {
     return (
-      <div>
-        <Login />
-        <h3>Admin</h3>
+      <div className="admin-panel container">
+        <div className="row">
+          <Login />
 
-        <a
-          onClick={ () =>
-            FlowRouter.go('/admin/about/edit')
-          }
-        >
-          Redigera om-sidan
-        </a>
+          <div className="options">
+            <h3>Admin</h3>
 
-        <a
-          onClick={ () =>
-            FlowRouter.go('/admin/posts/new', this.props.post)
-          }
-        >
-          Skapa nytt inlägg
-        </a>
-
-        <h4>Redigera inlägg</h4>
-        <ul>
-          { this.props.posts.map( post =>
-            <li
-              key={post._id}
+            <a
               onClick={ () =>
-                FlowRouter.go('/admin/posts/edit/'+post.slug, this.props.post)
+                FlowRouter.go('/admin/about/edit')
               }
             >
-              { post.title }
-            </li>
-          )}
-        </ul>
+              Redigera om-sidan
+            </a>
+            |
+            <a
+              onClick={ () =>
+                FlowRouter.go('/admin/posts/new', this.props.post)
+              }
+            >
+              Skapa nytt inlägg
+            </a>
+          </div>
+        </div>
+
+        <div className="row">
+          <h4>Redigera inlägg</h4>
+          <PostsList />
+        </div>
       </div>
     );
   }
 
 }
 
-Panel.propTypes = {
-  posts: PropTypes.array.isRequired,
-};
-
-export default createContainer(() => {
-  return {
-    posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
-  };
-}, Panel);
+export default Panel;
