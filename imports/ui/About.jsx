@@ -22,8 +22,8 @@ class AboutComponent extends Component {
           <div className="profile">
             <img src={ this.props.data ? this.props.data.image : "" }/>
           </div>
-          <div className="text">
-            { this.props.data ? this.getContent(this.props.data) : "" }
+          <div className="text"
+                dangerouslySetInnerHTML={{__html: this.props.data ? this.getContent(this.props.data) : ""}}>
           </div>
         </div>
       </div>
