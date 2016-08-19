@@ -42,7 +42,7 @@ class App extends Component {
     return (
       <div className="container">
         {this.renderPosts()}
-        <Pagination />
+        <Pagination page={this.state.page} />
       </div>
     );
   }
