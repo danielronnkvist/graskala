@@ -17,7 +17,6 @@ class App extends Component {
       posts: Posts.find({}, { sort: { createdAt: -1 }, limit: 5, skip: 5*(page-1) }).fetch(),
       page,
     };
-    this.forceUpdate()
   }
 
   componentWillMount() {
@@ -28,6 +27,7 @@ class App extends Component {
 
   updateOnNewQueryParams(routeState) {
     this.getStateUsingPage();
+    this.forceUpdate();
   }
 
   renderPosts() {
