@@ -9,8 +9,8 @@ class AboutComponent extends Component {
   getContent({title, text}) {
     return (
       <div>
-        <h3>{title || ""}</h3>
-        <p>{text || ""}</p>
+        <h3 dangerouslySetInnerHTML={{__html: title}}></h3>
+        <p dangerouslySetInnerHTML={{__html: text}}></p>
       </div>
     );
   }
@@ -22,8 +22,8 @@ class AboutComponent extends Component {
           <div className="profile">
             <img src={ this.props.data ? this.props.data.image : "" }/>
           </div>
-          <div className="text"
-                dangerouslySetInnerHTML={{__html: this.props.data ? this.getContent(this.props.data) : ""}}>
+          <div className="text">
+            {this.props.data ? this.getContent(this.props.data) : ""}
           </div>
         </div>
       </div>
