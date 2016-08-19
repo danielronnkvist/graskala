@@ -1,3 +1,4 @@
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -29,7 +30,9 @@ App.propTypes = {
 };
 
 export default createContainer(() => {
+  let page = FlowRouter.current().queryParams.page;
+  if(!page) page = 0;
   return {
-    posts: Posts.find({}, { sort: { createdAt: -1 } }).fetch(),
+    posts: Posts.find({}, { sort: { createdAt: -1 }, limit: 5, skip: 5*page }).fetch(),
   };
 }, App);
