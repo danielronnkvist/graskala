@@ -10,13 +10,6 @@ class App extends Component {
 
   renderPosts() {
     return this.props.posts.map((post) => {
-      post = {
-        title: post.title,
-        createdAt: post.createdAt,
-        image: post.image,
-        _id: post._id,
-        slug: post.slug,
-      };
       return (
         <Post key={post._id} post={post} />
     )});
