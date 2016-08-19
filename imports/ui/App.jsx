@@ -5,12 +5,34 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Posts } from './../../lib/collections.js';
 import Post from './Post.jsx';
+import Pagination from './misc/Pagination.jsx';
 
 // App component - represents the whole app
 class App extends Component {
 
+  getStateUsingPage() {
+    let page = FlowRouter.current().queryParams.page;
+    if(!page) page = 1;
+    this.state = {
+      posts: Posts.find({}, { sort: { createdAt: -1 }, limit: 5, skip: 5*(page-1) }).fetch(),
+      page,
+    };
+    this.forceUpdate()
+  }
+
+  componentWillMount() {
+    this.getStateUsingPage();
+    this.updateOnNewQueryParams = this.updateOnNewQueryParams.bind(this);
+    FlowRouter.triggers.enter([this.updateOnNewQueryParams]);
+  }
+
+  updateOnNewQueryParams(routeState) {
+    this.getStateUsingPage();
+  }
+
   renderPosts() {
-    return this.props.posts.map((post) => {
+    let posts = this.state.posts.length !== 0 ? this.state.posts : this.props.posts;
+    return posts.map((post) => {
       return (
         <Post key={post._id} post={post} />
     )});
@@ -20,6 +42,7 @@ class App extends Component {
     return (
       <div className="container">
         {this.renderPosts()}
+        <Pagination />
       </div>
     );
   }
@@ -31,8 +54,8 @@ App.propTypes = {
 
 export default createContainer(() => {
   let page = FlowRouter.current().queryParams.page;
-  if(!page) page = 0;
+  if(!page) page = 1;
   return {
-    posts: Posts.find({}, { sort: { createdAt: -1 }, limit: 5, skip: 5*page }).fetch(),
+    posts: Posts.find({}, { sort: { createdAt: -1 }, limit: 5, skip: 5*(page-1) }).fetch(),
   };
 }, App);
