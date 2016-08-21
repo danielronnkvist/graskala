@@ -1,6 +1,9 @@
 {
   "name": "graskala",
   "private": true,
+  "engines": {
+    "node": "4.4.7"
+  },
   "scripts": {
     "start": "meteor run"
   },
