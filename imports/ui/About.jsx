@@ -18,7 +18,7 @@ class AboutComponent extends Component {
   render() {
     return (
       <div className="container">
-        <div className="about">
+        <div className="page">
           <div className="profile">
             <img src={ this.props.data ? this.props.data.image : "" }/>
           </div>
