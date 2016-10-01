@@ -6,11 +6,16 @@ import { Posts } from './../../../lib/collections.js';
 
 class Pagination extends Component {
 
+  handleClick(page) {
+    window.scrollTo(0, 0);
+    FlowRouter.setQueryParams({page:page})
+  }
+
   getButtons(page, pages) {
     let nextButton = [(
       <div key={`last`}
            className={`page-button`}
-           onClick={ () => FlowRouter.setQueryParams({page:page+1}) }>
+           onClick={ () => this.handleClick(page+1) }>
         →
       </div>
     )];
@@ -23,7 +28,7 @@ class Pagination extends Component {
         array.push(
           <div key={i}
                className={`page-button ${i == page ? 'active' : ''}`}
-               onClick={ () => FlowRouter.setQueryParams({page:i}) }>
+               onClick={ () => this.handleClick(i) }>
             {i}
           </div>
         );
