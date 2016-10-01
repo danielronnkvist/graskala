@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
-import { Posts, About } from './../lib/collections.js';
+import { Posts, About, Contact } from './../lib/collections.js';
 import './../imports/api/upload.js';
 
 Meteor.startup(() => {
@@ -20,5 +20,8 @@ Meteor.methods({
   },
   getAboutData() {
     return About.findOne({}, { sort: { createdAt: -1 } });
+  },
+  getContactData() {
+    return Contact.findOne({}, { sort: { createdAt: -1 } });
   },
 });

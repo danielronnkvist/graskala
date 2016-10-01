@@ -41,7 +41,10 @@ export default class Menu extends Component {
           }>
           om
         </span>
-        <span>
+        <span
+          onClick={ () =>
+            this.props.onLinkClick('/kontakt')
+          }>
           kontakt
         </span>
         { this.getAdminLinks() }
