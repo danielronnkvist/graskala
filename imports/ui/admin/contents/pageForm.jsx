@@ -3,11 +3,10 @@ import React, { Component, PropTypes } from 'react';
 import ContentEditable from 'react-contenteditable';
 
 function clean(obj) {
-  for (var propName in obj) {
-    if (obj[propName] === null || obj[propName] === undefined) {
-      delete obj[propName];
-    }
-  }
+  return Object.keys(obj).reduce((o, k) => {
+    if(obj[k]) o[k] = obj[k];
+    return o;
+  }, {});
 }
 
 export default class PageForm extends Component {
@@ -53,7 +52,7 @@ export default class PageForm extends Component {
       title: this.title.lastHtml,
       text: this.text.lastHtml,
     };
-    clean(saveObject);
+    saveObject = clean(saveObject);
 
     if(this.image.files[0]) {
       saveObject.image = this.image
