@@ -4,24 +4,16 @@ import { Contact } from './../../../../lib/collections.js';
 
 export default class ContactForm extends Component {
 
-  saveImage(err, data) {
-    Contact.update(data.id, {
-      $set: {
-        image: data.url,
-      }
-    }, {
-      upsert: true,
-    });
-  }
-
-  saveData(data) {
-    Contact.update(data._id, {
-      $set: {
-        title: data.title,
-        text: data.text,
-      },
-    }, {
-      upsert: true,
+  saveData(data, id) {
+    return new Promise((resolve, reject) => {
+      Contact.update(id, {
+        $set: {
+          title: data.title,
+          text: data.text,
+        },
+      }, {
+        upsert: true,
+      }, (err) => {err ? reject(err) : resolve()});
     });
   }
 

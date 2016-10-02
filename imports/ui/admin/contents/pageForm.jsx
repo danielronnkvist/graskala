@@ -2,34 +2,70 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 import ContentEditable from 'react-contenteditable';
 
+function clean(obj) {
+  for (var propName in obj) {
+    if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName];
+    }
+  }
+}
+
 export default class PageForm extends Component {
 
-  uploadImage(image, id) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+    };
+  }
+
+  getLoadingIcon() {
+    if(this.state.loading) {
+      return <div>loading...</div>
+    }
+  }
+
+  uploadImage(data, id) {
+    var self = this;
     var file = {
-      type: image.files[0].type,
-      name: image.files[0].name,
+      type: data.image.files[0].type,
+      name: data.image.files[0].name,
     }
     var reader = new FileReader();
-    var saveImage = this.props.saveImage;
+    var saveData = this.props.saveData;
     reader.addEventListener("load", function() {
-      Meteor.call('upload', this.result, file, (err, data) => {
-        data.id = id;
-        saveImage(err, data);
+      Meteor.call('upload', this.result, file, (err, result) => {
+        data.image = result.url;
+        self.props.saveData(data, id).then(() => {
+          self.setState({
+            loading: false,
+          });
+        })
       });
     });
     reader.readAsDataURL(this.image.files[0]);
   }
 
   handleSubmit(data) {
-    if(this.image.files[0]) {
-      this.uploadImage(this.image, data._id)
-    }
-
-    this.props.saveData({
-      _id: data._id,
+    this.setState({
+      loading: true,
+    });
+    let saveObject = {
       title: this.title.lastHtml,
       text: this.text.lastHtml,
-    });
+    };
+    clean(saveObject);
+
+    if(this.image.files[0]) {
+      saveObject.image = this.image
+      this.uploadImage(saveObject, data._id);
+    } else if(saveObject) {
+      this.props.saveData(saveObject, data._id).then(() => {
+        this.setState({
+          loading: false,
+        });
+      });
+    }
   }
 
   render() {
@@ -64,12 +100,13 @@ export default class PageForm extends Component {
               />
             </div>
           </div>
-            <button
-              className="save"
-              onClick={this.handleSubmit.bind(this, data)}
-            >
-              Save!
-            </button>
+          <button
+            className="save"
+            onClick={this.handleSubmit.bind(this, data)}
+          >
+            Save!
+          </button>
+          { this.getLoadingIcon() }
         </div>
       </div>
     )
