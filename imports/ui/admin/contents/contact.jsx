@@ -20,7 +20,7 @@ export default class ContactForm extends Component {
   render() {
     const {data} = this.props;
 
-    return <PageForm data={data} saveImage={this.saveImage} saveData={this.saveData} />
+    return <PageForm data={data} saveData={this.saveData} />
   }
 
 }

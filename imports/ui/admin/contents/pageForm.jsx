@@ -32,7 +32,6 @@ export default class PageForm extends Component {
       name: data.image.files[0].name,
     }
     var reader = new FileReader();
-    var saveData = this.props.saveData;
     reader.addEventListener("load", function() {
       Meteor.call('upload', this.result, file, (err, result) => {
         data.image = result.url;
