@@ -3,6 +3,13 @@ import PageForm from './pageForm.jsx';
 
 export default class FormContainer extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data,
+    };
+  }
+
   saveData(data, id) {
     return new Promise((resolve, reject) => {
       this.props.collection.update(id, {
@@ -12,12 +19,19 @@ export default class FormContainer extends Component {
         },
       }, {
         upsert: true,
-      }, (err) => {err ? reject(err) : resolve()});
+      }, (err, data) => {
+        err ? reject(err) : resolve();
+        Meteor.call("getContactData", (err, data) => {
+          this.setState({
+            data: data,
+          });
+        });
+      });
     });
   }
 
   render() {
-    const {data} = this.props;
+    const {data} = this.state;
 
     return <PageForm data={data} saveData={this.saveData.bind(this)} />
   }
