@@ -44,6 +44,16 @@ export default class PostForm extends Component {
     });
   }
 
+  removeImage(post) {
+    Posts.update(post._id, {
+      $unset: {
+        image: "",
+      },
+    }, {
+      upsert: true,
+    });
+  }
+
   getDateString() {
     if(this.props.post.createdAt) {
       return this.props.post.createdAt.toDateString();
@@ -72,6 +82,9 @@ export default class PostForm extends Component {
           ref={ node =>
             this.image = node
           }/>
+        <button onClick={() => this.removeImage(post)}>
+          Ta bort bild
+        </button>
         <br/>
         <input
           type="text"
