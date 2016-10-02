@@ -7,7 +7,23 @@ import { Posts } from './../../../../lib/collections.js';
 
 export default class PostForm extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      post: props.post,
+    };
+  }
+
+  updatePostData(slug) {
+    Meteor.call("getPost", slug, (err, post) => {
+      this.setState({
+        post: post,
+      });
+    });
+  }
+
   uploadImage(image, post) {
+    var self = this;
     var file = {
       type: image.files[0].type,
       name: image.files[0].name,
@@ -21,7 +37,9 @@ export default class PostForm extends Component {
           }
         }, {
           upsert: true,
-        })
+        },() => {
+          self.updatePostData(post.slug);
+        });
       });
     });
     reader.readAsDataURL(this.image.files[0]);
@@ -41,6 +59,8 @@ export default class PostForm extends Component {
       },
     }, {
       upsert: true,
+    },() => {
+      this.updatePostData(post.slug);
     });
   }
 
@@ -51,6 +71,8 @@ export default class PostForm extends Component {
       },
     }, {
       upsert: true,
+    },() => {
+      this.updatePostData(post.slug);
     });
   }
 
@@ -61,7 +83,7 @@ export default class PostForm extends Component {
   }
 
   render() {
-    const {post} = this.props;
+    const {post} = this.state;
 
     return (
       <div className="post form">
