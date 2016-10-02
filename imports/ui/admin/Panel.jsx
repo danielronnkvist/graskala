@@ -10,7 +10,7 @@ export default class Panel extends Component {
     return (
       <div className="admin-panel container">
         <div className="row">
-          <Login />
+          <Login panel={true} />
 
           <div className="options">
             <h3>Admin</h3>
